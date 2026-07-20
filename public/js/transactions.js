@@ -116,7 +116,7 @@ const TransactionsModule = {
           <tr>
             <td class="font-mono">${t.date}</td>
             <td>
-              <span class="badge" style="background: #18181b; color: #ffffff; border: 1px solid #27272a; padding: 4px 8px; border-radius: 6px; font-weight: 600;">
+              <span class="badge" style="background: ${t.category_color}25; color: ${t.category_color}; border: 1px solid ${t.category_color}40; padding: 4px 8px; border-radius: 6px; font-weight: 600;">
                 ${t.category_name}
               </span>
             </td>

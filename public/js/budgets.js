@@ -38,15 +38,15 @@ const BudgetsModule = {
         const isOver = b.current_spent > b.monthly_limit;
         const isWarning = rawPercent >= 80 && !isOver;
 
-        let barColor = '#ffffff';
-        if (isWarning) barColor = '#d4d4d8';
-        if (isOver) barColor = '#a1a1aa';
+        let barColor = 'var(--color-success)';
+        if (isWarning) barColor = 'var(--color-warning)';
+        if (isOver) barColor = 'var(--color-danger)';
 
         return `
           <div class="budget-card glass ${isOver ? 'over-limit' : ''}">
             <div class="budget-header">
               <div class="budget-category-info">
-                <div class="category-badge-icon">
+                <div class="category-badge-icon" style="background: ${b.category_color};">
                   <i class="fa-solid fa-layer-group"></i>
                 </div>
                 <div>

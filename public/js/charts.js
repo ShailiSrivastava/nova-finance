@@ -1,4 +1,4 @@
-// Chart.js Manager for Nova Finance Dashboard - Monochrome Theme
+// Chart.js Manager for Nova Finance Dashboard - Bold Colors Theme
 const Charts = {
   instances: {},
 
@@ -21,18 +21,18 @@ const Charts = {
           {
             label: 'Income ($)',
             data: incomeData,
-            backgroundColor: '#ffffff',
-            borderColor: '#ffffff',
-            borderWidth: 1,
-            borderRadius: 4
+            backgroundColor: 'rgba(16, 185, 129, 0.85)',
+            borderColor: '#10b981',
+            borderWidth: 2,
+            borderRadius: 6
           },
           {
             label: 'Expenses ($)',
             data: expenseData,
-            backgroundColor: '#3f3f46',
-            borderColor: '#52525b',
-            borderWidth: 1,
-            borderRadius: 4
+            backgroundColor: 'rgba(239, 68, 68, 0.85)',
+            borderColor: '#ef4444',
+            borderWidth: 2,
+            borderRadius: 6
           }
         ]
       },
@@ -41,13 +41,13 @@ const Charts = {
         maintainAspectRatio: false,
         plugins: {
           legend: {
-            labels: { color: '#a1a1aa', font: { family: 'Inter', size: 12, weight: '600' } }
+            labels: { color: '#94a3b8', font: { family: 'Inter', size: 12, weight: '600' } }
           },
           tooltip: {
-            backgroundColor: '#18181b',
-            titleColor: '#ffffff',
-            bodyColor: '#ffffff',
-            borderColor: '#3f3f46',
+            backgroundColor: '#0f172a',
+            titleColor: '#f8fafc',
+            bodyColor: '#f8fafc',
+            borderColor: 'rgba(255, 255, 255, 0.1)',
             borderWidth: 1,
             callbacks: {
               label: (context) => `${context.dataset.label}: $${context.parsed.y.toLocaleString()}`
@@ -56,12 +56,12 @@ const Charts = {
         },
         scales: {
           x: {
-            ticks: { color: '#71717a' },
+            ticks: { color: '#64748b' },
             grid: { color: 'rgba(255, 255, 255, 0.05)' }
           },
           y: {
             ticks: { 
-              color: '#71717a',
+              color: '#64748b',
               callback: (val) => `$${val}`
             },
             grid: { color: 'rgba(255, 255, 255, 0.05)' }
@@ -80,9 +80,7 @@ const Charts = {
 
     const labels = categoryBreakdown.map(item => item.category);
     const data = categoryBreakdown.map(item => item.amount);
-
-    const monoPalette = ['#ffffff', '#e4e4e7', '#d4d4d8', '#a1a1aa', '#71717a', '#52525b', '#3f3f46', '#27272a'];
-    const colors = categoryBreakdown.map((_, i) => monoPalette[i % monoPalette.length]);
+    const colors = categoryBreakdown.map(item => item.color || '#6366f1');
 
     this.instances[canvasId] = new Chart(ctx, {
       type: 'doughnut',
@@ -93,7 +91,7 @@ const Charts = {
             data,
             backgroundColor: colors,
             borderWidth: 2,
-            borderColor: '#121215'
+            borderColor: '#0f172a'
           }
         ]
       },
@@ -103,20 +101,20 @@ const Charts = {
         plugins: {
           legend: {
             position: 'right',
-            labels: { color: '#a1a1aa', font: { family: 'Inter', size: 11 }, boxWidth: 12 }
+            labels: { color: '#94a3b8', font: { family: 'Inter', size: 11 }, boxWidth: 12 }
           },
           tooltip: {
-            backgroundColor: '#18181b',
-            titleColor: '#ffffff',
-            bodyColor: '#ffffff',
-            borderColor: '#3f3f46',
+            backgroundColor: '#0f172a',
+            titleColor: '#f8fafc',
+            bodyColor: '#f8fafc',
+            borderColor: 'rgba(255, 255, 255, 0.1)',
             borderWidth: 1,
             callbacks: {
               label: (context) => `${context.label}: $${context.parsed.toLocaleString()}`
             }
           }
         },
-        cutout: '72%'
+        cutout: '70%'
       }
     });
   },
@@ -130,7 +128,6 @@ const Charts = {
 
     const labels = paymentMethods.map(item => item.method);
     const data = paymentMethods.map(item => item.total);
-    const monoPalette = ['#ffffff', '#d4d4d8', '#a1a1aa', '#71717a', '#52525b', '#3f3f46', '#27272a'];
 
     this.instances[canvasId] = new Chart(ctx, {
       type: 'pie',
@@ -139,9 +136,11 @@ const Charts = {
         datasets: [
           {
             data,
-            backgroundColor: monoPalette.slice(0, data.length),
+            backgroundColor: [
+              '#6366f1', '#10b981', '#f59e0b', '#06b6d4', '#ec4899', '#a855f7'
+            ],
             borderWidth: 2,
-            borderColor: '#121215'
+            borderColor: '#0f172a'
           }
         ]
       },
@@ -151,13 +150,13 @@ const Charts = {
         plugins: {
           legend: {
             position: 'right',
-            labels: { color: '#a1a1aa', font: { family: 'Inter', size: 11 } }
+            labels: { color: '#94a3b8', font: { family: 'Inter', size: 11 } }
           },
           tooltip: {
-            backgroundColor: '#18181b',
-            titleColor: '#ffffff',
-            bodyColor: '#ffffff',
-            borderColor: '#3f3f46',
+            backgroundColor: '#0f172a',
+            titleColor: '#f8fafc',
+            bodyColor: '#f8fafc',
+            borderColor: 'rgba(255, 255, 255, 0.1)',
             borderWidth: 1
           }
         }
