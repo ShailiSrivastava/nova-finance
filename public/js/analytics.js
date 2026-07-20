@@ -42,7 +42,7 @@ const AnalyticsModule = {
         statsTbody.innerHTML = data.categoryBreakdown.map(cat => `
           <tr>
             <td>
-              <span class="badge" style="background: ${cat.color}25; color: ${cat.color}; border: 1px solid ${cat.color}40; padding: 4px 8px; border-radius: 6px; font-weight: 600;">
+              <span class="badge" style="background: ${cat.color || '#3d5af1'}; color: #ffffff; padding: 4px 10px; border-radius: 6px; font-weight: 700; box-shadow: 0 2px 6px rgba(0,0,0,0.3);">
                 ${cat.category}
               </span>
             </td>

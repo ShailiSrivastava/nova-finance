@@ -34,7 +34,7 @@ const RecurringModule = {
         <tr>
           <td><strong>${r.description}</strong></td>
           <td>
-            <span class="badge" style="background: ${r.category_color}25; color: ${r.category_color}; border: 1px solid ${r.category_color}40; padding: 4px 8px; border-radius: 6px; font-weight: 600;">
+            <span class="badge" style="background: ${r.category_color || '#3d5af1'}; color: #ffffff; padding: 4px 10px; border-radius: 6px; font-weight: 700; box-shadow: 0 2px 6px rgba(0,0,0,0.3);">
               ${r.category_name}
             </span>
           </td>

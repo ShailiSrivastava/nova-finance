@@ -1,4 +1,4 @@
-// Chart.js Manager for Nova Finance Dashboard - Bold Colors Theme
+// Chart.js Manager for Nova Finance Dashboard - True Bold Colors Theme
 const Charts = {
   instances: {},
 
@@ -21,16 +21,16 @@ const Charts = {
           {
             label: 'Income ($)',
             data: incomeData,
-            backgroundColor: 'rgba(16, 185, 129, 0.85)',
-            borderColor: '#10b981',
+            backgroundColor: '#00e676',
+            borderColor: '#00c853',
             borderWidth: 2,
             borderRadius: 6
           },
           {
             label: 'Expenses ($)',
             data: expenseData,
-            backgroundColor: 'rgba(239, 68, 68, 0.85)',
-            borderColor: '#ef4444',
+            backgroundColor: '#ff1744',
+            borderColor: '#d50000',
             borderWidth: 2,
             borderRadius: 6
           }
@@ -41,14 +41,14 @@ const Charts = {
         maintainAspectRatio: false,
         plugins: {
           legend: {
-            labels: { color: '#94a3b8', font: { family: 'Inter', size: 12, weight: '600' } }
+            labels: { color: '#ffffff', font: { family: 'Inter', size: 12, weight: '700' } }
           },
           tooltip: {
-            backgroundColor: '#0f172a',
-            titleColor: '#f8fafc',
-            bodyColor: '#f8fafc',
-            borderColor: 'rgba(255, 255, 255, 0.1)',
-            borderWidth: 1,
+            backgroundColor: '#0e121b',
+            titleColor: '#ffffff',
+            bodyColor: '#ffffff',
+            borderColor: '#3d5af1',
+            borderWidth: 1.5,
             callbacks: {
               label: (context) => `${context.dataset.label}: $${context.parsed.y.toLocaleString()}`
             }
@@ -56,15 +56,16 @@ const Charts = {
         },
         scales: {
           x: {
-            ticks: { color: '#64748b' },
-            grid: { color: 'rgba(255, 255, 255, 0.05)' }
+            ticks: { color: '#94a3b8', font: { weight: '600' } },
+            grid: { color: 'rgba(255, 255, 255, 0.06)' }
           },
           y: {
             ticks: { 
-              color: '#64748b',
+              color: '#94a3b8',
+              font: { weight: '600' },
               callback: (val) => `$${val}`
             },
-            grid: { color: 'rgba(255, 255, 255, 0.05)' }
+            grid: { color: 'rgba(255, 255, 255, 0.06)' }
           }
         }
       }
@@ -80,7 +81,10 @@ const Charts = {
 
     const labels = categoryBreakdown.map(item => item.category);
     const data = categoryBreakdown.map(item => item.amount);
-    const colors = categoryBreakdown.map(item => item.color || '#6366f1');
+    
+    // Bold vivid color palette
+    const boldPalette = ['#3d5af1', '#00e676', '#ffab00', '#00e5ff', '#ff1744', '#d500f9', '#7c4dff', '#ff6d00'];
+    const colors = categoryBreakdown.map((item, i) => item.color || boldPalette[i % boldPalette.length]);
 
     this.instances[canvasId] = new Chart(ctx, {
       type: 'doughnut',
@@ -91,7 +95,7 @@ const Charts = {
             data,
             backgroundColor: colors,
             borderWidth: 2,
-            borderColor: '#0f172a'
+            borderColor: '#141926'
           }
         ]
       },
@@ -101,14 +105,14 @@ const Charts = {
         plugins: {
           legend: {
             position: 'right',
-            labels: { color: '#94a3b8', font: { family: 'Inter', size: 11 }, boxWidth: 12 }
+            labels: { color: '#ffffff', font: { family: 'Inter', size: 11, weight: '600' }, boxWidth: 12 }
           },
           tooltip: {
-            backgroundColor: '#0f172a',
-            titleColor: '#f8fafc',
-            bodyColor: '#f8fafc',
-            borderColor: 'rgba(255, 255, 255, 0.1)',
-            borderWidth: 1,
+            backgroundColor: '#0e121b',
+            titleColor: '#ffffff',
+            bodyColor: '#ffffff',
+            borderColor: '#3d5af1',
+            borderWidth: 1.5,
             callbacks: {
               label: (context) => `${context.label}: $${context.parsed.toLocaleString()}`
             }
@@ -137,10 +141,10 @@ const Charts = {
           {
             data,
             backgroundColor: [
-              '#6366f1', '#10b981', '#f59e0b', '#06b6d4', '#ec4899', '#a855f7'
+              '#3d5af1', '#00e676', '#ffab00', '#00e5ff', '#d500f9', '#ff1744'
             ],
             borderWidth: 2,
-            borderColor: '#0f172a'
+            borderColor: '#141926'
           }
         ]
       },
@@ -150,14 +154,14 @@ const Charts = {
         plugins: {
           legend: {
             position: 'right',
-            labels: { color: '#94a3b8', font: { family: 'Inter', size: 11 } }
+            labels: { color: '#ffffff', font: { family: 'Inter', size: 11, weight: '600' } }
           },
           tooltip: {
-            backgroundColor: '#0f172a',
-            titleColor: '#f8fafc',
-            bodyColor: '#f8fafc',
-            borderColor: 'rgba(255, 255, 255, 0.1)',
-            borderWidth: 1
+            backgroundColor: '#0e121b',
+            titleColor: '#ffffff',
+            bodyColor: '#ffffff',
+            borderColor: '#3d5af1',
+            borderWidth: 1.5
           }
         }
       }
