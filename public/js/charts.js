@@ -1,4 +1,4 @@
-// Chart.js Manager for Nova Finance Dashboard
+// Chart.js Manager for Nova Finance Dashboard - Monochrome Theme
 const Charts = {
   instances: {},
 
@@ -21,18 +21,18 @@ const Charts = {
           {
             label: 'Income ($)',
             data: incomeData,
-            backgroundColor: 'rgba(16, 185, 129, 0.75)',
-            borderColor: '#10b981',
-            borderWidth: 2,
-            borderRadius: 6
+            backgroundColor: '#ffffff',
+            borderColor: '#ffffff',
+            borderWidth: 1,
+            borderRadius: 4
           },
           {
             label: 'Expenses ($)',
             data: expenseData,
-            backgroundColor: 'rgba(239, 68, 68, 0.75)',
-            borderColor: '#ef4444',
-            borderWidth: 2,
-            borderRadius: 6
+            backgroundColor: '#3f3f46',
+            borderColor: '#52525b',
+            borderWidth: 1,
+            borderRadius: 4
           }
         ]
       },
@@ -41,9 +41,14 @@ const Charts = {
         maintainAspectRatio: false,
         plugins: {
           legend: {
-            labels: { color: '#94a3b8', font: { family: 'Inter', size: 12 } }
+            labels: { color: '#a1a1aa', font: { family: 'Inter', size: 12, weight: '600' } }
           },
           tooltip: {
+            backgroundColor: '#18181b',
+            titleColor: '#ffffff',
+            bodyColor: '#ffffff',
+            borderColor: '#3f3f46',
+            borderWidth: 1,
             callbacks: {
               label: (context) => `${context.dataset.label}: $${context.parsed.y.toLocaleString()}`
             }
@@ -51,12 +56,12 @@ const Charts = {
         },
         scales: {
           x: {
-            ticks: { color: '#64748b' },
+            ticks: { color: '#71717a' },
             grid: { color: 'rgba(255, 255, 255, 0.05)' }
           },
           y: {
             ticks: { 
-              color: '#64748b',
+              color: '#71717a',
               callback: (val) => `$${val}`
             },
             grid: { color: 'rgba(255, 255, 255, 0.05)' }
@@ -75,7 +80,9 @@ const Charts = {
 
     const labels = categoryBreakdown.map(item => item.category);
     const data = categoryBreakdown.map(item => item.amount);
-    const colors = categoryBreakdown.map(item => item.color || '#6366f1');
+
+    const monoPalette = ['#ffffff', '#e4e4e7', '#d4d4d8', '#a1a1aa', '#71717a', '#52525b', '#3f3f46', '#27272a'];
+    const colors = categoryBreakdown.map((_, i) => monoPalette[i % monoPalette.length]);
 
     this.instances[canvasId] = new Chart(ctx, {
       type: 'doughnut',
@@ -86,7 +93,7 @@ const Charts = {
             data,
             backgroundColor: colors,
             borderWidth: 2,
-            borderColor: '#0f172a'
+            borderColor: '#121215'
           }
         ]
       },
@@ -96,15 +103,20 @@ const Charts = {
         plugins: {
           legend: {
             position: 'right',
-            labels: { color: '#94a3b8', font: { family: 'Inter', size: 11 }, boxWidth: 12 }
+            labels: { color: '#a1a1aa', font: { family: 'Inter', size: 11 }, boxWidth: 12 }
           },
           tooltip: {
+            backgroundColor: '#18181b',
+            titleColor: '#ffffff',
+            bodyColor: '#ffffff',
+            borderColor: '#3f3f46',
+            borderWidth: 1,
             callbacks: {
               label: (context) => `${context.label}: $${context.parsed.toLocaleString()}`
             }
           }
         },
-        cutout: '70%'
+        cutout: '72%'
       }
     });
   },
@@ -118,6 +130,7 @@ const Charts = {
 
     const labels = paymentMethods.map(item => item.method);
     const data = paymentMethods.map(item => item.total);
+    const monoPalette = ['#ffffff', '#d4d4d8', '#a1a1aa', '#71717a', '#52525b', '#3f3f46', '#27272a'];
 
     this.instances[canvasId] = new Chart(ctx, {
       type: 'pie',
@@ -126,11 +139,9 @@ const Charts = {
         datasets: [
           {
             data,
-            backgroundColor: [
-              '#6366f1', '#10b981', '#f59e0b', '#06b6d4', '#ec4899', '#a855f7'
-            ],
+            backgroundColor: monoPalette.slice(0, data.length),
             borderWidth: 2,
-            borderColor: '#0f172a'
+            borderColor: '#121215'
           }
         ]
       },
@@ -140,7 +151,14 @@ const Charts = {
         plugins: {
           legend: {
             position: 'right',
-            labels: { color: '#94a3b8', font: { family: 'Inter', size: 11 } }
+            labels: { color: '#a1a1aa', font: { family: 'Inter', size: 11 } }
+          },
+          tooltip: {
+            backgroundColor: '#18181b',
+            titleColor: '#ffffff',
+            bodyColor: '#ffffff',
+            borderColor: '#3f3f46',
+            borderWidth: 1
           }
         }
       }
