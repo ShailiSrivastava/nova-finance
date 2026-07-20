@@ -49,8 +49,6 @@ const BudgetsModule = {
                 <div class="category-badge-icon">
                   <i class="fa-solid fa-layer-group"></i>
                 </div>
-                  <i class="fa-solid fa-layer-group"></i>
-                </div>
                 <div>
                   <h4>${b.category_name}</h4>
                   <span class="text-muted text-sm">${rawPercent}% Used</span>
