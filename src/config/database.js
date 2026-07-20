@@ -2,12 +2,19 @@ const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const fs = require('fs');
 
-const dataDir = path.join(__dirname, '../../data');
+const defaultDataDir = process.env.VERCEL ? '/tmp' : path.join(__dirname, '../../data');
+const dataDir = process.env.DATA_DIR ? path.resolve(process.env.DATA_DIR) : defaultDataDir;
 if (!fs.existsSync(dataDir)) {
-  fs.mkdirSync(dataDir, { recursive: true });
+  try {
+    fs.mkdirSync(dataDir, { recursive: true });
+  } catch (e) {
+    console.warn('Could not create data directory:', e.message);
+  }
 }
 
-const dbPath = path.join(dataDir, 'nova_finance.db');
+const dbPath = process.env.DB_PATH ? path.resolve(process.env.DB_PATH) : path.join(dataDir, 'nova_finance.db');
+
+
 
 const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {

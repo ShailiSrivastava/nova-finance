@@ -1,4 +1,7 @@
+require('dotenv').config();
+
 const express = require('express');
+
 const cors = require('cors');
 const compression = require('compression');
 const path = require('path');
@@ -22,6 +25,34 @@ app.use(express.urlencoded({ extended: true }));
 // Serve static frontend files
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Lazy database initialization for serverless / local execution
+let dbInitPromise = null;
+async function ensureDbInit() {
+  if (!dbInitPromise) {
+    dbInitPromise = (async () => {
+      await initDatabase();
+      const txCount = await dbGet('SELECT COUNT(*) as count FROM transactions');
+      if (txCount && txCount.count === 0) {
+        console.log('No transactions found. Seeding initial financial dataset...');
+        await dbService.seedData();
+      }
+      await recurringEngine.processDue();
+    })();
+  }
+  return dbInitPromise;
+}
+
+// Middleware to ensure DB is initialized before handling requests
+app.use(async (req, res, next) => {
+  try {
+    await ensureDbInit();
+    next();
+  } catch (err) {
+    console.error('Failed to initialize Nova Finance database:', err);
+    next(err);
+  }
+});
+
 // API Routes
 app.use('/api', apiRoutes);
 
@@ -30,22 +61,9 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Startup initialization sequence
-async function startServer() {
-  try {
-    await initDatabase();
-
-    // Check if transactions are empty; if so, automatically seed initial data
-    const txCount = await dbGet('SELECT COUNT(*) as count FROM transactions');
-    if (txCount.count === 0) {
-      console.log('No transactions found. Seeding initial financial dataset...');
-      await dbService.seedData();
-    }
-
-    // Run recurring transactions check on server startup
-    await recurringEngine.processDue();
-
-    // Schedule background checks for recurring transactions every 4 hours
+// If executed directly (node server.js), start standalone listener
+if (require.main === module) {
+  ensureDbInit().then(() => {
     setInterval(async () => {
       try {
         await recurringEngine.processDue();
@@ -61,10 +79,11 @@ async function startServer() {
       console.log(`  ⚡ Backend REST API: http://localhost:${PORT}/api/summary`);
       console.log(`===================================================`);
     });
-  } catch (err) {
+  }).catch((err) => {
     console.error('Failed to start Nova Finance server:', err);
     process.exit(1);
-  }
+  });
 }
 
-startServer();
+module.exports = app;
+

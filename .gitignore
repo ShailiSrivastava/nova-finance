@@ -3,3 +3,6 @@ data/*.db
 data/*.sqlite
 .DS_Store
 *.log
+.env
+.env.local
+
